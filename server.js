@@ -1,31 +1,38 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const MongoClient = require('mongodb').MongoClient
+// const MongoClient = require('mongodb').MongoClient
 
 require('dotenv').config();
 
 const app = express();
 
-connectionString = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/myFirstDatabase?retryWrites=true&w=majority`
+// connectionString = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/myFirstDatabase?retryWrites=true&w=majority`
 
-console.log(connectionString)
+app.use(express.json())
+app.use(express.urlencoded({ extended: true}))
 
-MongoClient.connect(connectionString, {
+const db = require("./app/models");
+
+db.mongoose.connect(db.url, {
+    useNewUrlParser: true,
     useUnifiedTopology: true})
-    .then(client => {
+    .then( ()=> {
         console.log('Connected to Database')
-        const db = client.db('delilah-db')
-        const contatoCollection = db.collection('contactos')
-        app.use(bodyParser.urlencoded({ extended: true}))
+        // const db = client.db('delilah-db')
+        // const contatoCollection = db.collection('contactos')
 
-        contatoCollection.insertOne({aaaaaa: "aaaaaaaaaaaaa"})
-                .then(result=> {
-                    console.log(result)
-                })
+        // contatoCollection.insertOne({aaaaaa: "aaaaaaaaaaaaa"})
+        //         .then(result=> {
+        //             console.log(result)
+        //         })
         
-        app.listen(3000, function() {
-            console.log('Escuchando en 3000')
-        })
+
 
     })
     .catch(console.error)
+
+
+require("./app/routes/contacto_routes")(app);
+
+app.listen(3000, function() {
+    console.log('Escuchando en 3000')
+})
