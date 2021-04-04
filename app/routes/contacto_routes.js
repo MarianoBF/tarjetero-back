@@ -2,11 +2,11 @@ module.exports = app => {
 
     const router = require("express").Router();
     
-    const usuarios = require("../controllers/contacto_controller.js")
+    const contacto = require("../controllers/contacto_controller.js")
     
     // router.get("/contactos", usuarios.findAll);
     
-    router.post("/contacto", usuarios.create);
+    router.post("/contacto", contacto.create);
 
     // router.put("/usuario/:id_usuario", usuarios.update);
 
