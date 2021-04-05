@@ -5,6 +5,11 @@ module.exports = mongoose => {
       {
         nombre: String,
         apellido: String,
+        ciudad: String,
+        empresa: String,
+        cargo: String,
+        canalPreferido: String,
+        interes: Number,
       },
       { timestamps: true }
     )

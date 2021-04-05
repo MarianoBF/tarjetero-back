@@ -1,18 +1,18 @@
 module.exports = mongoose => {
-    const Empresa = mongoose.model(
-      "empresa",
+    const Usuario = mongoose.model(
+      "usuario",
       mongoose.Schema(
         {
           nombre: String,
-          ciudad: String,
+          apellido: String,
           email: String,
-          telefono: String, 
-          direccion: String,
+          perfil: String,
+          password: String,
         },
         { timestamps: true }
       )
     );
   
-    return Empresa;
+    return Usuario;
   
       }
