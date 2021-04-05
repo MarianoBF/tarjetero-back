@@ -33,7 +33,7 @@ exports.login = (req, res) => {
         password: req.body.password
       });
       usuario.save(usuario)
-      .then(data => console.log(data))
+      .then(data => res.send(data))
       .catch(error => console.log(error))
   
     } catch {

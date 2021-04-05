@@ -5,10 +5,11 @@ exports.create = (req, res) => {
   try {
     const ubicacion = new Ubicacion({
       region: req.body.region,
-      pais: req.body.pais
+      pais: req.body.pais,
+      ciudad: req.body.ciudad,
     });
     ubicacion.save(ubicacion)
-    .then(data => console.log(data))
+    .then(data => res.send(data))
     .catch(error => console.log(error))
 
   } catch {

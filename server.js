@@ -1,6 +1,6 @@
 const express = require('express');
 // const MongoClient = require('mongodb').MongoClient
-
+const cors = require('cors')
 require('dotenv').config();
 
 const app = express();
@@ -9,6 +9,13 @@ const app = express();
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
+
+const corsOptions = {
+    origin: "http://localhost:3000"
+};
+
+app.use(cors(corsOptions))
+
 
 const db = require("./app/models");
 
@@ -32,7 +39,11 @@ db.mongoose.connect(db.url, {
 
 
 require("./app/routes/contacto_routes")(app);
+require("./app/routes/ubicacion_routes")(app);
+// require("./app/routes/empresas_routes")(app);
+// require("./app/routes/usuario_routes")(app);
 
-app.listen(3000, function() {
-    console.log('Escuchando en 3000')
+
+app.listen(3500, function() {
+    console.log('Escuchando en 3500')
 })

@@ -11,7 +11,7 @@ exports.create = (req, res) => {
       apellido: req.body.apellido
     });
     contacto.save(contacto)
-    .then(data => console.log(data))
+    .then(data => res.send(data))
     .catch(error => console.log(error))
     
     // , (err, data) => {

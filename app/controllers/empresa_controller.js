@@ -8,7 +8,7 @@ exports.create = (req, res) => {
       direccion: req.body.direccion
     });
     empresa.save(empresa)
-    .then(data => console.log(data))
+    .then(data => res.send(data))
     .catch(error => console.log(error))
 
   } catch {

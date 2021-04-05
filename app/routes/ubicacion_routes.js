@@ -4,7 +4,7 @@ module.exports = app => {
     
     const ubicacion = require("../controllers/ubicacion_controller.js")
        
-    // router.post("/ubicacion", ubicacion.create);
+    router.post("/ubicacion", ubicacion.create);
 
     app.use("/api/v1/", router)
 
