@@ -11,7 +11,7 @@ exports.create = (req, res) => {
       password: req.body.password
     });
     usuario.save(usuario)
-    .then(data => console.log(data))
+    .then(data => res.send(data))
     .catch(error => console.log(error))
 
   } catch {
@@ -26,13 +26,10 @@ exports.create = (req, res) => {
 exports.login = (req, res) => {
     try {
       const usuario = new Usuario({
-        nombre: req.body.nombre,
-        apellido: req.body.apellido,
         email: req.body.email,
-        perfil: req.body.perfil,
         password: req.body.password
       });
-      usuario.save(usuario)
+      usuario.findOne({ email: usuario.email })
       .then(data => res.send(data))
       .catch(error => console.log(error))
   
@@ -44,3 +41,21 @@ exports.login = (req, res) => {
         );
     }
   };
+
+
+exports.findAll = (req, res) => {
+    try {
+      usuario.find()
+      .then(data => res.send(data))
+      .catch(error => console.log(error))
+  
+    } catch {
+      res
+        .status(400)
+        .send(
+          "Error"
+        );
+    }
+  };
+  
+  

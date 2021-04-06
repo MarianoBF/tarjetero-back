@@ -20,3 +20,19 @@ exports.create = (req, res) => {
       );
   }
 };
+
+exports.findAll = (req, res) => {
+  try {
+    Ubicacion.find()
+    .then(data => res.send(data))
+    .catch(error => console.log(error))
+
+  } catch {
+    res
+      .status(400)
+      .send(
+        "Error"
+      );
+  }
+};
+
