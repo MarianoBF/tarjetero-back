@@ -44,9 +44,10 @@ exports.update = (req, res) => {
       pais: req.body.pais,
       ciudad: req.body.ciudad,
     });
-    Ubicacion.findOneAndUpdate({ciudad: ubicacion.ciudad})
-    .then(data => res.send(data))
-    .catch(error => console.log(error))
+    Ubicacion.updateOne({ciudad: ubicacion.ciudad})
+    // .then(data => res.send(data))
+    // .catch(error => console.log(error))
+    .then(data => console.log(data))
 
   } catch {
     res

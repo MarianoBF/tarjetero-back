@@ -3,7 +3,10 @@ module.exports = mongoose => {
       "empresa",
       mongoose.Schema(
         {
-          nombre: String,
+          nombre: {
+            type: String,
+            unique: true,
+          },
           ciudad: String,
           pais: String,
           email: String,

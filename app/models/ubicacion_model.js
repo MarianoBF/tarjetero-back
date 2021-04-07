@@ -5,7 +5,10 @@ module.exports = mongoose => {
         {
           region: String,
           pais: String,
-          ciudad: String,
+          ciudad: {
+            type: String,
+            unique: true,
+          },
         },
         { timestamps: true }
       )
