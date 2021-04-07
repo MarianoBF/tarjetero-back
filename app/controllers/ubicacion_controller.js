@@ -39,15 +39,15 @@ exports.findAll = (req, res) => {
 
 exports.update = (req, res) => {
   try {
-    const ubicacion = new Ubicacion({
-      region: req.body.region,
-      pais: req.body.pais,
-      ciudad: req.body.ciudad,
-    });
-    Ubicacion.updateOne({ciudad: ubicacion.ciudad})
-    // .then(data => res.send(data))
-    // .catch(error => console.log(error))
-    .then(data => console.log(data))
+    Ubicacion.updateOne(
+      {ciudad: req.body.ciudad}
+      , {$set: {
+        region: req.body.region,
+        pais: req.body.pais,
+        ciudad: req.body.ciudad,
+      }})
+    .then(data => res.send(data))
+    .catch(error=> console.log(error))
 
   } catch {
     res
@@ -61,6 +61,7 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   try {
+    console.log(req.params.ciudad)
     const ciudadBorrar = req.params.ciudad
     Ubicacion.findOneAndDelete(ciudadBorrar)
     .then(data => res.send(data))

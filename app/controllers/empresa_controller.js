@@ -41,18 +41,18 @@ exports.findAll = (req, res) => {
 
 exports.update = (req, res) => {
   try {
-    const empresa = new Empresa({
-      nombre: req.body.nombre,
-      direccion: req.body.direccion,
-      pais: req.body.pais,
-      ciudad: req.body.ciudad,
-      email: req.body.email,
-      telefono: req.body.telefono
-    });
-    Empresa.findOneAndUpdate({nombre: empresa.nombre})
+     Empresa.updateOne(
+      {nombre: req.body.nombre},
+      {$set: {
+        nombre: req.body.nombre,
+        direccion: req.body.direccion,
+        pais: req.body.pais,
+        ciudad: req.body.ciudad,
+        email: req.body.email,
+        telefono: req.body.telefono
+      }})
     .then(data => res.send(data))
     .catch(error => console.log(error))
-
   } catch {
     res
       .status(400)
