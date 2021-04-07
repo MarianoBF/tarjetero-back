@@ -8,6 +8,12 @@ module.exports = app => {
 
     router.get("/empresas", empresas.findAll);
 
+    router.put("/empresa/", empresas.update);
+
+    router.delete("/empresa/:empresa", empresas.delete);
+
+    router.delete("/empresas", empresas.deleteAll);
+
     app.use("/api/v1/", router)
 
     }

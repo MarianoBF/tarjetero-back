@@ -8,6 +8,13 @@ module.exports = app => {
 
     router.get("/ubicaciones", ubicacion.findAll);
 
+    router.put("/ubicacion/", ubicacion.update);
+
+    router.delete("/ubicacion/:ciudad", ubicacion.delete);
+
+    router.delete("/ubicaciones", ubicacion.deleteAll);
+
+
     app.use("/api/v1/", router)
 
     }

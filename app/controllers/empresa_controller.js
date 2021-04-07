@@ -39,3 +39,58 @@ exports.findAll = (req, res) => {
   }
 };
 
+exports.update = (req, res) => {
+  try {
+    const empresa = new Empresa({
+      nombre: req.body.nombre,
+      direccion: req.body.direccion,
+      pais: req.body.pais,
+      ciudad: req.body.ciudad,
+      email: req.body.email,
+      telefono: req.body.telefono
+    });
+    Empresa.findOneAndUpdate({nombre: empresa.nombre})
+    .then(data => res.send(data))
+    .catch(error => console.log(error))
+
+  } catch {
+    res
+      .status(400)
+      .send(
+        "Error"
+      );
+  }
+};
+
+
+exports.delete = (req, res) => {
+  try {
+    const empresaBorrar = req.params.empresa
+    Empresa.findOneAndDelete(empresaBorrar)
+    .then(data => res.send(data))
+    .catch(error => console.log(error))
+
+  } catch {
+    res
+      .status(400)
+      .send(
+        "Error"
+      );
+  }
+};
+
+
+exports.deleteAll = (req, res) => {
+  try {
+    Empresa.deleteMany()
+    .then(data => res.send(data))
+    .catch(error => console.log(error))
+
+  } catch {
+    res
+      .status(400)
+      .send(
+        "Error"
+      );
+  }
+};
