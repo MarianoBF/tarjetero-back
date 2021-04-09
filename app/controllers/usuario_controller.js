@@ -13,7 +13,7 @@ exports.create = (req, res) => {
       perfil: req.body.perfil,
       password: bcrypt.hashSync(req.body.password, 5)
     });
-    usuario.save(usuario)
+    usuario.save()
     .then(data => res.send(data))
     .catch(error => console.log(error))
 

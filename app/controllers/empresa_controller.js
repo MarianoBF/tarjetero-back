@@ -11,7 +11,7 @@ exports.create = (req, res) => {
       email: req.body.email,
       telefono: req.body.telefono
     });
-    empresa.save(empresa)
+    empresa.save()
     .then(data => res.send(data))
     .catch(error => console.log(error))
 
@@ -65,8 +65,7 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   try {
-    const empresaBorrar = req.params.empresa
-    Empresa.findOneAndDelete(empresaBorrar)
+    Ubicacion.deleteOne({empresa: req.params.empresa})
     .then(data => res.send(data))
     .catch(error => console.log(error))
 

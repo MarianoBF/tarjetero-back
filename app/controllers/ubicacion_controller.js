@@ -8,7 +8,7 @@ exports.create = (req, res) => {
       pais: req.body.pais,
       ciudad: req.body.ciudad,
     });
-    ubicacion.save(ubicacion)
+    ubicacion.save()
     .then(data => res.send(data))
     .catch(error => console.log(error))
 
@@ -62,8 +62,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   try {
     console.log(req.params.ciudad)
-    const ciudadBorrar = req.params.ciudad
-    Ubicacion.findOneAndDelete(ciudadBorrar)
+    Ubicacion.deleteOne({ciudad: req.params.ciudad})
     .then(data => res.send(data))
     .catch(error => console.log(error))
 

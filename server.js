@@ -1,11 +1,12 @@
 const express = require("express");
-// const MongoClient = require('mongodb').MongoClient
 const cors = require("cors");
 require("dotenv").config();
+const mongoose = require("mongoose");
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 
 const app = express();
-
-// connectionString = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/myFirstDatabase?retryWrites=true&w=majority`
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -30,13 +31,6 @@ db.mongoose
   })
   .then(() => {
     console.log("Connected to Database");
-    // const db = client.db('delilah-db')
-    // const contatoCollection = db.collection('contactos')
-
-    // contatoCollection.insertOne({aaaaaa: "aaaaaaaaaaaaa"})
-    //         .then(result=> {
-    //             console.log(result)
-    //         })
   })
   .catch(console.error);
 
