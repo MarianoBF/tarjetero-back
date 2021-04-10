@@ -6,6 +6,14 @@ exports.create = (req, res) => {
     const contacto = new Contacto({
       nombre: req.body.nombre,
       apellido: req.body.apellido,
+      empresa: req.body.empresa,
+      cargo: req.body.cargo,
+      email: req.body.email,
+      region: req.body.region,
+      ciudad: req.body.ciudad,
+      interes: req.body.interes,
+      canalPreferido: req.body.canalPreferido,
+      canales: req.body.canales,
     });
     contacto
       .save()
@@ -33,7 +41,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   try {
     Contacto.find({
-      $or: [{nombre: req.body.nombre}, {apellido: req.body.apellido}],
+      $or: [{nombre: req.body.nombre}, {apellido: req.body.apellido}, {empresa: req.body.empresa}],
     })
       .then(data => res.send(data))
       .catch(error => console.log(error));
