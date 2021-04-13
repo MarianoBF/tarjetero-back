@@ -14,10 +14,7 @@ module.exports = app => {
 
     router.put("/usuario/:id", usuario.update);
 
-    router.delete("/usuario/:id", usuario.delete);
-
-    router.delete("/usuarios", usuario.deleteAll);
-    
+    router.delete("/usuario/:id", usuario.delete);  
 
     app.use("/api/v1/", router)
 
