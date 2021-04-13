@@ -14,8 +14,6 @@ paths:
       summary: "Acceso a listado de Usuarios"
       tags:
         - "Usuarios"
-      parameters:
-        - $ref: "#components/parameters/AccessToken"
       responses:
         "200":
           description: "OK"
@@ -46,12 +44,12 @@ paths:
             schema:
               type: "object"
               required:
-                - nombre_usuario
+                - email
                 - password
               properties:
-                nombre_usuario:
+                email:
                   type: "string"
-                  example: jperez
+                  example: email@email.com
                 password:
                   type: "string"
                   example: "12345678"
@@ -79,28 +77,7 @@ paths:
         content:
           application/json:
             schema:
-              type: "object"
-              required:
-                - nombre_usuario
-                - nombre_completo
-                - email
-                - password
-              properties:
-                nombre_completo:
-                  type: "string"
-                  example: "Juan Pérez"
-                nombre_usuario:
-                  type: "string"
-                  example: "jperez"
-                direcccion:
-                  type: "string"
-                  example: "Marcelo T. Alvear 1614 4°A"
-                password:
-                  type: "string"
-                  example: "12345678"
-                email:
-                  type: "string"
-                  example: juan@perez.com
+              $ref: "#/components/schemas/Usuario"
       responses:
         "200":
           description: "Todo OK"
@@ -118,13 +95,6 @@ paths:
       summary: "Modificar Usuario por id"
       tags:
         - "Usuarios"
-      parameters:
-        - $ref: "#components/parameters/AccessToken"
-        - name: id_usuario
-          required: true
-          in: path
-          schema:
-            type: "integer"
       requestBody:
         description: "Los detalles del usuario"
         required: true
@@ -183,18 +153,12 @@ components:
     Usuario:
       type: "object"
       required:
-        - id_usuario
         - nombre_usuario
         - nombre_completo
-        - direccion
         - email
         - password
-        - rol
+        - perfil
       properties:
-        id_usuario:
-          type: "integer"
-          readOnly: true
-          example: "2"
         nombre_completo:
           type: "string"
           example: "Juan Pérez"
@@ -213,8 +177,118 @@ components:
         rol:
           type: "string"
           enum:
-            - usuario
-            - administrador
+            - Basico
+            - Admin
+
+    Empresa:
+      type: "object"
+      required:
+        - nombre
+        - ciudad
+        - pais
+        - email
+        - telefono
+        - direccion
+      properties:
+        nombre:
+          type: "string"
+          example: "Compañía X"
+        ciudad:
+          type: "string"
+          example: "Buenos Aires"
+        país:
+          type: "string"
+          example: "Argentina"
+        email:
+          type: "string"
+          example: "email@email.com"
+        telefono:
+          type: "string"
+          example: "54 11 5464 4455"
+        direccion:
+          type: "string"
+          example: "Marcelo T. Alvear 1614 4°A"
+
+
+    Ubicacion:
+      type: "object"
+      required:
+        - region
+        - pais
+        - ciudad
+      properties:
+        region:
+          type: "string"
+          example: "América del Sur"
+        pais:
+          type: "string"
+          example: Argentina
+        ciudad:
+          type: "string"
+          example: "Buenos Aires"
+
+
+    Contacto:
+      type: "object"
+      required:
+        - nombre
+        - apellido
+        - empresa
+        - cargo
+        - email
+        - region
+        - pais
+        - ciudad
+        - interes
+        - canalPreferido
+        - canales
+      properties:
+        nombre:
+          type: "string"
+          example: "Juan"
+        apellido:
+          type: "string"
+          example: "Pérez"
+        empresa:
+          type: "string"
+          example: "Compañía X"
+        cargo:
+          type: "string"
+          example: "Presidente"
+        email:
+          type: "string"
+          example: "juan@perez.com"
+        region:
+          type: "string"
+          example: "América del Sur"
+        pais:
+          type: "string"
+          example: "Argentina"
+        ciudad:
+          type: "string"
+          example: "Buenos Aires"
+        interes:
+          type: "integer"
+          example: 30
+        canalPreferido:
+          type: "string"
+          example: "Whatsapp"
+        canales:
+          type: "object"
+          properties: 
+            canal: 
+              type: "integer"
+              example: "Whatsapp"
+            cuenta:
+              type: "string"
+              example: "+54 11 2545 5461"  
+            preferencia:
+              type: "string"
+              enum: ["No molestar", "Sin preferencia", "Canal preferido"]
+
+
+
+
   responses:
     SinAcceso:
       description: El token de acceso no es válido o está vacío.
@@ -225,11 +299,11 @@ components:
     DatosFaltantes:
       description: Los datos enviados son incorrectos o incompletos, reintente.
 
-  parameters:
-    AccessToken:
-      name: "x-access-token"
-      in: header
-      description: Access Token.
-      required: true
-      schema:
-        type: string
+  securitySchemes:
+    bearerAuth:            
+      type: http
+      scheme: bearer
+      bearerFormat: JWT  
+
+security:
+  - bearerAuth: []

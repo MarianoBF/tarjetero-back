@@ -6,6 +6,9 @@ mongoose.set("useNewUrlParser", true);
 mongoose.set("useFindAndModify", false);
 mongoose.set("useCreateIndex", true);
 const bcrypt = require("bcryptjs");
+const swaggerUI = require('swagger-ui-express');
+const YAML = require('yamljs')
+const docs = YAML.load('./spec.yaml');
 
 const app = express();
 
@@ -22,6 +25,8 @@ app.use((req, res, next) => {
   console.log(req.body, req.path);
   next();
 });
+
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(docs));
 
 const db = require("./app/models");
 const Usuario = db.usuario;
