@@ -14,7 +14,6 @@ chequearToken = (token) => {
     } else {
         decoded.resultado = "Autorizado";
         validacion = decoded;
-        console.log(decoded)
     }
   });
   return validacion
