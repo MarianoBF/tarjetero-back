@@ -10,6 +10,15 @@ module.exports = app => {
 
     router.get("/usuarios", usuario.findAll);
 
+    router.get("/usuario", usuario.findOne);
+
+    router.put("/usuario/:id", usuario.update);
+
+    router.delete("/usuario/:id", usuario.delete);
+
+    router.delete("/usuarios", usuario.deleteAll);
+    
+
     app.use("/api/v1/", router)
 
     }

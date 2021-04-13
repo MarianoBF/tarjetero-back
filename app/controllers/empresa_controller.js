@@ -65,7 +65,7 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   try {
-    Ubicacion.deleteOne({empresa: req.params.empresa})
+    Empresa.deleteOne({empresa: req.params.empresa})
     .then(data => res.send(data))
     .catch(error => console.log(error))
 

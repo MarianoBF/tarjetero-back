@@ -71,7 +71,7 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
     try {
-      usuario.find()
+      Usuario.find()
       .then(data => res.send(data))
       .catch(error => console.log(error))
   
@@ -84,4 +84,68 @@ exports.findAll = (req, res) => {
     }
   };
   
+
+  exports.findOne = (req, res) => {
+    try {
+      Usuario.findOne({ email: req.body.email })
+        .then(data => res.send(data))
+        .catch(error => console.log(error));
+    } catch {
+      res.status(400).send("Error");
+    }
+  };
   
+exports.update = (req, res) => {
+  try {
+    Usuario.updateOne(
+      {id: req.body.id}
+      , {$set: {
+        nombre: req.body.nombre,
+        apellido: req.body.apellido,
+        email: req.body.email,
+        perfil: req.body.perfil,
+        password: bcrypt.hashSync(req.body.password, 5)
+      }})
+    .then(data => res.send(data))
+    .catch(error=> console.log(error))
+
+  } catch {
+    res
+      .status(400)
+      .send(
+        "Error"
+      );
+  }
+};
+
+
+exports.delete = (req, res) => {
+  try {
+    Usuario.deleteOne({_id: req.params.id})
+    .then(data => res.send(data))
+    .catch(error => console.log(error))
+
+  } catch {
+    res
+      .status(400)
+      .send(
+        "Error"
+      );
+  }
+};
+
+
+exports.deleteAll = (req, res) => {
+  try {
+    Usuario.deleteMany()
+    .then(data => res.send(data))
+    .catch(error => console.log(error))
+
+  } catch {
+    res
+      .status(400)
+      .send(
+        "Error"
+      );
+  }
+};
