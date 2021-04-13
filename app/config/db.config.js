@@ -1,8 +1,4 @@
 module.exports = {
-    HOST: process.env.DB_HOST,
-    USER: process.env.DB_USER,
-    PASSWORD: process.env.DB_PASS, 
-    DB: "DelilahTestdb",
     SECRETO: process.env.SECRET,
-    URL: process.env.URL
+    URL: `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/DW-Acamica?retryWrites=true&w=majority`
   };

@@ -21,6 +21,8 @@ exports.create = (req, res) => {
         .save()
         .then(data => res.send(data))
         .catch(error => console.log(error));
+    } else if (validacion.perfil === "Basico") {
+      res.status(403).send("No está autorizado para esta operación");
     } else {
       res.status(401).send("Token inválido");
     }
@@ -31,10 +33,6 @@ exports.create = (req, res) => {
 
 exports.login = (req, res) => {
   try {
-    const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
-    );
-    if (validacion.perfil === "Admin") {
       const usuarioLoguear = {
         email: req.body.email,
         password: req.body.password,
@@ -68,9 +66,6 @@ exports.login = (req, res) => {
           }
         })
         .catch(error => console.log(error));
-    } else {
-      res.status(401).send("Token inválido");
-    }
   } catch {
     res
       .status(400)
@@ -89,6 +84,8 @@ exports.findAll = (req, res) => {
       Usuario.find()
         .then(data => res.send(data))
         .catch(error => console.log(error));
+    } else if (validacion.perfil === "Basico") {
+      res.status(403).send("No está autorizado para esta operación");
     } else {
       res.status(401).send("Token inválido");
     }
@@ -106,6 +103,8 @@ exports.findOne = (req, res) => {
       Usuario.findOne({email: req.body.email})
         .then(data => res.send(data))
         .catch(error => console.log(error));
+    } else if (validacion.perfil === "Basico") {
+      res.status(403).send("No está autorizado para esta operación");
     } else {
       res.status(401).send("Token inválido");
     }
@@ -134,6 +133,8 @@ exports.update = (req, res) => {
       )
         .then(data => res.send(data))
         .catch(error => console.log(error));
+    } else if (validacion.perfil === "Basico") {
+      res.status(403).send("No está autorizado para esta operación");
     } else {
       res.status(401).send("Token inválido");
     }
@@ -151,6 +152,8 @@ exports.delete = (req, res) => {
       Usuario.deleteOne({_id: req.params.id})
         .then(data => res.send(data))
         .catch(error => console.log(error));
+    } else if (validacion.perfil === "Basico") {
+      res.status(403).send("No está autorizado para esta operación");
     } else {
       res.status(401).send("Token inválido");
     }
