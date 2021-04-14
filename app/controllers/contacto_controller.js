@@ -14,7 +14,9 @@ exports.create = (req, res) => {
         cargo: req.body.cargo,
         email: req.body.email,
         region: req.body.region,
+        pais: req.body.pais,
         ciudad: req.body.ciudad,
+        direccion: req.body.direccion,
         interes: req.body.interes,
         canalPreferido: req.body.canalPreferido,
         canales: req.body.canales,
@@ -42,7 +44,7 @@ exports.findAll = (req, res) => {
     );
     if (validacion.resultado === "Autorizado") {
       Contacto.find()
-        .then(data => res.send(data))
+        .then(data => res.send(data)&&console.log(data))
         .catch(error => console.log(error));
     } else {
       res.status(401).send("Token inválido");

@@ -11,6 +11,7 @@ module.exports = mongoose => {
         region: String,
         pais: String,
         ciudad: String,
+        direccion: String,
         interes: Number,
         canalPreferido: String,
         canales: [{
