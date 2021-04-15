@@ -3,9 +3,13 @@ const Usuario = db.usuario;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("../config/db.config");
+const PERFILESPERMITIDOS = ["Básico", "Admin"];
 
 exports.create = (req, res) => {
   try {
+    if (!PERFILESPERMITIDOS.includes(req.body.perfil)) {
+      res.status(400).send("Perfil no válido");
+    } 
     const validacion = chequearToken(
       req.headers["authorization"].split(" ")[1]
     );
@@ -33,39 +37,39 @@ exports.create = (req, res) => {
 
 exports.login = (req, res) => {
   try {
-      const usuarioLoguear = {
-        email: req.body.email,
-        password: req.body.password,
-      };
-      console.log(usuarioLoguear);
-      Usuario.findOne({email: usuarioLoguear.email})
-        .then(data => {
-          console.log(data);
+    const usuarioLoguear = {
+      email: req.body.email,
+      password: req.body.password,
+    };
+    console.log(usuarioLoguear);
+    Usuario.findOne({email: usuarioLoguear.email})
+      .then(data => {
+        console.log(data);
 
-          const passwordOK = bcrypt.compareSync(
-            usuarioLoguear.password,
-            data.password
+        const passwordOK = bcrypt.compareSync(
+          usuarioLoguear.password,
+          data.password
+        );
+        if (passwordOK) {
+          const token = jwt.sign(
+            {
+              perfil: data.perfil,
+              email: data.email,
+              id_usuario: data._id,
+            },
+            config.SECRETO,
+            {expiresIn: 86400}
           );
-          if (passwordOK) {
-            const token = jwt.sign(
-              {
-                perfil: data.perfil,
-                email: data.email,
-                id_usuario: data._id,
-              },
-              config.SECRETO,
-              {expiresIn: 86400}
+          res.send(token);
+        } else {
+          res
+            .status(400)
+            .send(
+              "Hubo un problema al loguear, revise los datos y vuelva a intentar en un momento"
             );
-            res.send(token);
-          } else {
-            res
-              .status(400)
-              .send(
-                "Hubo un problema al loguear, revise los datos y vuelva a intentar en un momento"
-              );
-          }
-        })
-        .catch(error => console.log(error));
+        }
+      })
+      .catch(error => console.log(error));
   } catch {
     res
       .status(400)

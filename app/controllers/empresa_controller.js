@@ -80,7 +80,7 @@ exports.delete = (req, res) => {
       req.headers["authorization"].split(" ")[1]
     );
     if (validacion.resultado === "Autorizado") {
-      Empresa.deleteOne({empresa: req.params.empresa})
+      Empresa.deleteOne({nombre: req.params.empresa})
         .then(data => res.send(data))
         .catch(error => console.log(error));
     } else {

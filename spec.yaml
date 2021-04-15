@@ -6,7 +6,7 @@ info:
   contact:
     name: Mariano Fernández
 servers:
-  - url: "http://localhost:8500/api/v1/"
+  - url: "http://localhost:3500/api/v1/"
 
 paths:
   /usuarios:
@@ -66,7 +66,7 @@ paths:
           $ref: "#components/responses/DatosFaltantes"
         "500":
           $ref: "#components/responses/ErrorServidor"
-  /usuario/crear:
+  /usuario:
     post:
       summary: "Cargar un usuario"
       tags:
@@ -123,7 +123,6 @@ paths:
       tags:
         - "Usuarios"
       parameters:
-        - $ref: "#components/parameters/AccessToken"
         - name: id_usuario
           required: true
           in: path
@@ -141,12 +140,305 @@ paths:
         "500":
           $ref: "#components/responses/ErrorServidor"
 
+  /empresas:
+    get:
+      summary: "Acceso a listado de Empresas"
+      tags:
+        - "Empresas"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#components/schemas/Empresa"
+        "400":
+          $ref: "#components/responses/DatosFaltantes"
+        "401":
+          $ref: "#components/responses/SinAcceso"
+        "403":
+          $ref: "#components/responses/NoAutorizado"
+        "500":
+          $ref: "#components/responses/ErrorServidor"
+  /empresa:
+    post:
+      summary: "Cargar una empresa"
+      tags:
+        - "Empresas"
+      requestBody:
+        description: "Los detalles de la empresa"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Empresa"
+      responses:
+        "200":
+          description: "Todo OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empresa"
+        "400":
+          $ref: "#components/responses/DatosFaltantes"
+        "500":
+          $ref: "#components/responses/ErrorServidor"
+    put:
+      summary: "Modificar Empresa por nombre"
+      tags:
+        - "Empresas"
+      requestBody:
+        description: "Los detalles de la empresa"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Empresa"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                $ref: "#/components/schemas/Empresa"
+        "400":
+          $ref: "#components/responses/DatosFaltantes"
+        "401":
+          $ref: "#components/responses/SinAcceso"
+        "403":
+          $ref: "#components/responses/NoAutorizado"
+        "500":
+          $ref: "#components/responses/ErrorServidor"
+    delete:
+      summary: "Borrar Empresa"
+      tags:
+        - "Empresas"
+      parameters:
+        - name: empresa
+          required: true
+          in: path
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          $ref: "#components/responses/DatosFaltantes"
+        "401":
+          $ref: "#components/responses/SinAcceso"
+        "403":
+          $ref: "#components/responses/NoAutorizado"
+        "500":
+          $ref: "#components/responses/ErrorServidor"
+
+  /ubicaciones:
+    get:
+      summary: "Acceso a listado de Ubicaciones"
+      tags:
+        - "Ubicaciones"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#components/schemas/Ubicacion"
+        "400":
+          $ref: "#components/responses/DatosFaltantes"
+        "401":
+          $ref: "#components/responses/SinAcceso"
+        "403":
+          $ref: "#components/responses/NoAutorizado"
+        "500":
+          $ref: "#components/responses/ErrorServidor"
+  /ubicacion:
+    post:
+      summary: "Cargar una ubicación"
+      tags:
+        - "Ubicaciones"
+      requestBody:
+        description: "Los detalles de la ubicación"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Ubicacion"
+      responses:
+        "200":
+          description: "Todo OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ubicacion"
+        "400":
+          $ref: "#components/responses/DatosFaltantes"
+        "500":
+          $ref: "#components/responses/ErrorServidor"
+    put:
+      summary: "Modificar ubicación por ciudad"
+      tags:
+        - "Ubicaciones"
+      requestBody:
+        description: "Los detalles de la ubicación"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Ubicacion"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                $ref: "#/components/schemas/Ubicacion"
+        "400":
+          $ref: "#components/responses/DatosFaltantes"
+        "401":
+          $ref: "#components/responses/SinAcceso"
+        "403":
+          $ref: "#components/responses/NoAutorizado"
+        "500":
+          $ref: "#components/responses/ErrorServidor"
+  /ubicacion/{ciudad}:
+    delete:
+      summary: "Borrar Ubicación"
+      tags:
+        - "Ubicaciones"
+      parameters:
+        - name: ciudad
+          required: true
+          in: path
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          $ref: "#components/responses/DatosFaltantes"
+        "401":
+          $ref: "#components/responses/SinAcceso"
+        "403":
+          $ref: "#components/responses/NoAutorizado"
+        "500":
+          $ref: "#components/responses/ErrorServidor"
+
+  /contactos:
+    get:
+      summary: "Acceso a listado de Contactos"
+      tags:
+        - "Contactos"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#components/schemas/Contacto"
+        "400":
+          $ref: "#components/responses/DatosFaltantes"
+        "401":
+          $ref: "#components/responses/SinAcceso"
+        "403":
+          $ref: "#components/responses/NoAutorizado"
+        "500":
+          $ref: "#components/responses/ErrorServidor"
+  /contacto:
+    post:
+      summary: "Cargar un contacto"
+      tags:
+        - "Contactos"
+      requestBody:
+        description: "Los detalles del contacto"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Contacto"
+      responses:
+        "200":
+          description: "Todo OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contacto"
+        "400":
+          $ref: "#components/responses/DatosFaltantes"
+        "500":
+          $ref: "#components/responses/ErrorServidor"
+  /contacto/{id_contacto}:
+    put:
+      summary: "Modificar Contacto por id"
+      tags:
+        - "Contactos"
+      parameters:
+        - name: id_contacto
+          required: true
+          in: path
+          schema:
+            type: "string"
+      requestBody:
+        description: "Los detalles del contacto"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Contacto"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                $ref: "#/components/schemas/Contacto"
+        "400":
+          $ref: "#components/responses/DatosFaltantes"
+        "401":
+          $ref: "#components/responses/SinAcceso"
+        "403":
+          $ref: "#components/responses/NoAutorizado"
+        "500":
+          $ref: "#components/responses/ErrorServidor"
+    delete:
+      summary: "Borrar Contacto"
+      tags:
+        - "Contactos"
+      parameters:
+        - name: id_contacto
+          required: true
+          in: path
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          $ref: "#components/responses/DatosFaltantes"
+        "401":
+          $ref: "#components/responses/SinAcceso"
+        "403":
+          $ref: "#components/responses/NoAutorizado"
+        "500":
+          $ref: "#components/responses/ErrorServidor"
 
 tags:
   - name: "Usuarios"
     description: "ABM de usuarios y login"
-
-
+  - name: "Empresas"
+    description: "ABM de empresas"
+  - name: "Ubicaciones"
+    description: "ABM de ubicaciones"
+  - name: "Contactos"
+    description: "ABM de contactos"
 
 components:
   schemas:
@@ -174,10 +466,10 @@ components:
         email:
           type: "string"
           example: juan@perez.com
-        rol:
+        perfil:
           type: "string"
           enum:
-            - Basico
+            - Básico
             - Admin
 
     Empresa:
@@ -285,9 +577,6 @@ components:
             preferencia:
               type: "string"
               enum: ["No molestar", "Sin preferencia", "Canal preferido"]
-
-
-
 
   responses:
     SinAcceso:

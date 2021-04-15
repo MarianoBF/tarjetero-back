@@ -36,8 +36,7 @@ db.mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then((dbase) => {
-    console.log(dbase)
+  .then(() => {
     console.log("Connected to Database");
     if (process.argv.includes("inicial")) {
       const usuario = new Usuario({
