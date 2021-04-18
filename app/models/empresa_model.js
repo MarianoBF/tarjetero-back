@@ -5,6 +5,7 @@ module.exports = mongoose => {
         {
           nombre: {
             type: String,
+            required: true,
             unique: true,
           },
           ciudad: String,

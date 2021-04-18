@@ -5,9 +5,19 @@ module.exports = mongoose => {
         {
           nombre: String,
           apellido: String,
-          email: String,
-          perfil: String,
-          password: String,
+          email: {
+            type: String,
+            required: true,
+            unique: true,
+          },
+          perfil: {
+            type: String,
+            required: true,
+          },
+          password: {
+            type: String,
+            required: true,
+          }
         },
         { timestamps: true }
       )

@@ -3,15 +3,42 @@ module.exports = mongoose => {
     "contacto",
     mongoose.Schema(
       {
-        nombre: String,
-        apellido: String,
-        empresa: String,
-        cargo: String,
-        email: String,
-        region: String,
-        pais: String,
-        ciudad: String,
-        direccion: String,
+        nombre: {
+          type: String,
+          required: true,
+        },
+        apellido: {
+          type: String,
+          required: true,
+        },
+        empresa: {
+          type: String,
+          required: true,
+        },
+        cargo: {
+          type: String,
+          required: true,
+        },
+        email: {
+          type: String,
+          required: true,
+        },
+        region: {
+          type: String,
+          required: true,
+        },
+        pais: {
+          type: String,
+          required: true,
+        },
+        ciudad: {
+          type: String,
+          required: true,
+        },
+        direccion: {
+          type: String,
+          required: true,
+        },
         interes: Number,
         canalPreferido: String,
         canales: [{
