@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: ["https://marianobf.github.io", "http://localhost:3000"]
 };
 
 app.use(cors(corsOptions));
@@ -59,6 +59,6 @@ require("./app/routes/ubicacion_routes")(app);
 require("./app/routes/empresas_routes")(app);
 require("./app/routes/usuario_routes")(app);
 
-app.listen(3500, function () {
-  console.log("Escuchando en 3500");
+app.listen(process.env.PORT, function () {
+  console.log("Escuchando en: " + process.env.PORT);
 });
