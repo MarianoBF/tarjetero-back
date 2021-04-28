@@ -53,11 +53,15 @@ db.mongoose
     }
   })
   .catch(console.error);
-
+  
 require("./app/routes/contacto_routes")(app);
 require("./app/routes/ubicacion_routes")(app);
 require("./app/routes/empresas_routes")(app);
 require("./app/routes/usuario_routes")(app);
+
+app.get("/", (req, res) => {
+  res.json({message: "Servicio operativo"});
+});
 
 app.listen(process.env.PORT, function () {
   console.log("Escuchando en: " + process.env.PORT);
