@@ -4,7 +4,7 @@ const Contacto = db.contacto;
 exports.create = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       const contacto = new Contacto({
@@ -40,7 +40,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       Contacto.find()
@@ -57,7 +57,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       Contacto.find({
@@ -80,7 +80,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       Contacto.updateOne(
@@ -105,7 +105,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       Contacto.deleteOne({_id: req.params.id})
@@ -122,7 +122,7 @@ exports.delete = (req, res) => {
 exports.deleteAll = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       Contacto.deleteMany()

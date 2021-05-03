@@ -11,7 +11,7 @@ exports.create = (req, res) => {
       res.status(400).send("Perfil no válido");
     } 
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.perfil === "Admin") {
       const usuario = new Usuario({
@@ -60,7 +60,11 @@ exports.login = (req, res) => {
             config.SECRETO,
             {expiresIn: 86400}
           );
-          res.send(token);
+          res.cookie('token', token, {
+            expires: new Date(Date.now() + 86400),
+            secure: false, // set to true if your using https
+            httpOnly: true
+          }).send(token);
         } else {
           res
             .status(400)
@@ -82,7 +86,7 @@ exports.login = (req, res) => {
 exports.findAll = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.perfil === "Admin") {
       Usuario.find()
@@ -101,7 +105,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.perfil === "Admin") {
       Usuario.findOne({email: req.body.email})
@@ -120,7 +124,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.perfil === "Admin") {
       Usuario.updateOne(
@@ -150,7 +154,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.perfil === "Admin") {
       Usuario.deleteOne({_id: req.params.id})
