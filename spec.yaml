@@ -589,10 +589,7 @@ components:
       description: Los datos enviados son incorrectos o incompletos, reintente.
 
   securitySchemes:
-    bearerAuth:            
-      type: http
-      scheme: bearer
-      bearerFormat: JWT  
-
-security:
-  - bearerAuth: []
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
