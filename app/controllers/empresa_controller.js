@@ -5,7 +5,7 @@ const chequearToken = require("../auth/auth");
 exports.create = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       const empresa = new Empresa({
@@ -31,7 +31,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       Empresa.find()
@@ -48,7 +48,7 @@ exports.findAll = (req, res) => {
 exports.update = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       Empresa.updateOne(
@@ -77,7 +77,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       Empresa.deleteOne({nombre: req.params.empresa})
@@ -94,7 +94,7 @@ exports.delete = (req, res) => {
 exports.deleteAll = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       Empresa.deleteMany()

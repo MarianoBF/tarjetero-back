@@ -9,6 +9,8 @@ const bcrypt = require("bcryptjs");
 const swaggerUI = require('swagger-ui-express');
 const YAML = require('yamljs')
 const docs = YAML.load('./spec.yaml');
+const cookieParser = require('cookie-parser');
+
 
 const app = express();
 
@@ -16,13 +18,17 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 const corsOptions = {
+  credentials: true,
   origin: ["https://marianobf.github.io", "http://localhost:3000"]
 };
 
 app.use(cors(corsOptions));
 
+app.use(cookieParser());
+
 app.use((req, res, next) => {
   console.log(req.body, req.path);
+  console.log(req.cookies.token)
   next();
 });
 

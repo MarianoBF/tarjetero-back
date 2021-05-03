@@ -4,7 +4,7 @@ const Ubicacion = db.ubicacion;
 exports.create = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       const ubicacion = new Ubicacion({
@@ -28,7 +28,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       Ubicacion.find()
@@ -45,7 +45,7 @@ exports.findAll = (req, res) => {
 exports.update = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       Ubicacion.updateOne(
@@ -71,7 +71,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       console.log(req.params.ciudad);
@@ -89,7 +89,7 @@ exports.delete = (req, res) => {
 exports.deleteAll = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.headers["authorization"].split(" ")[1]
+      req.cookies.token
     );
     if (validacion.resultado === "Autorizado") {
       Ubicacion.deleteMany()
