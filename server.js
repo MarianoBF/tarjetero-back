@@ -50,7 +50,7 @@ db.mongoose
         apellido: "Admin",
         email: "admin@admin.com",
         perfil: "Admin",
-        password: "$2a$05$p.WwGv./t5duFX/qTkgIiesoWnCQsz.e3lmJxNWtVUGcNDeQS61CS",
+        password: bcrypt.hashSync('admin',5),
       });
       usuario
         .save()

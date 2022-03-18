@@ -13,6 +13,9 @@ exports.create = (req, res) => {
     const validacion = chequearToken(
       req.cookies.token
     );
+    if (Usuario.findOne({email: req.body.email})) {
+      res.status(400).send("Email ya en uso");
+    };
     if (validacion.perfil === "Admin") {
       const usuario = new Usuario({
         nombre: req.body.nombre,
