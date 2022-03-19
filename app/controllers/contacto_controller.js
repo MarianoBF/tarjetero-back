@@ -24,7 +24,10 @@ exports.create = (req, res) => {
       contacto
         .save()
         .then(data => res.send(data))
-        .catch(error => console.log(error));
+        .catch(error => {
+          console.log("error", error.code)
+          res.status(400).send("Problema al guardar");
+        });   
     } else {
       res.status(401).send("Token inválido");
     }
