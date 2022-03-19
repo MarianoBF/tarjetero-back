@@ -9,12 +9,14 @@ exports.create = (req, res) => {
   try {
     if (!PERFILESPERMITIDOS.includes(req.body.perfil)) {
       res.status(400).send("Perfil no válido");
+      return
     } 
     const validacion = chequearToken(
       req.cookies.token
     );
     if (Usuario.findOne({email: req.body.email})) {
       res.status(400).send("Email ya en uso");
+      return
     };
     if (validacion.perfil === "Admin") {
       const usuario = new Usuario({
@@ -22,7 +24,7 @@ exports.create = (req, res) => {
         apellido: req.body.apellido,
         email: req.body.email,
         perfil: req.body.perfil,
-        password: bcrypt.hashSync(req.body.password, 5),
+        password: bcrypt.hashSync(req.body.password, process.env.SALT),
       });
       usuario
         .save()
@@ -30,11 +32,14 @@ exports.create = (req, res) => {
         .catch(error => console.log(error));
     } else if (validacion.perfil === "Basico") {
       res.status(403).send("No está autorizado para esta operación");
+      return
     } else {
       res.status(401).send("Token inválido");
+      return
     }
   } catch {
     res.status(400).send("Error");
+    return
   }
 };
 
