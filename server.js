@@ -28,7 +28,7 @@ app.use(cookieParser());
 
 app.use((req, res, next) => {
   console.log(req.body, req.path);
-  console.log(req.cookies.token)
+  console.log(req.headers["authorization"].split(" ")[1])
   next();
 });
 

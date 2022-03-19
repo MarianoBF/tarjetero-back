@@ -12,7 +12,7 @@ exports.create = (req, res) => {
       return
     } 
     const validacion = chequearToken(
-      req.cookies.token
+      req.headers["authorization"].split(" ")[1]
     );
     if (Usuario.findOne({email: req.body.email})) {
       res.status(400).send("Email ya en uso");
@@ -94,7 +94,7 @@ exports.login = (req, res) => {
 exports.findAll = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.cookies.token
+      req.headers["authorization"].split(" ")[1]
     );
     if (validacion.perfil === "Admin") {
       Usuario.find()
@@ -113,7 +113,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.cookies.token
+      req.headers["authorization"].split(" ")[1]
     );
     if (validacion.perfil === "Admin") {
       Usuario.findOne({email: req.body.email})
@@ -132,7 +132,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.cookies.token
+      req.headers["authorization"].split(" ")[1]
     );
     if (validacion.perfil === "Admin") {
       Usuario.updateOne(
@@ -162,7 +162,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   try {
     const validacion = chequearToken(
-      req.cookies.token
+      req.headers["authorization"].split(" ")[1]
     );
     if (validacion.perfil === "Admin") {
       Usuario.deleteOne({_id: req.params.id})
