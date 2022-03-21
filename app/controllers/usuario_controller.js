@@ -52,6 +52,14 @@ exports.login = (req, res) => {
     console.log(usuarioLoguear);
     Usuario.findOne({email: usuarioLoguear.email})
       .then(data => {
+        if (data === null) {
+          res
+          .status(400)
+          .send(
+            "Hubo un problema al loguear, revise los datos y vuelva a intentar en un momento"
+          );
+          return
+        }
         console.log(data);
 
         const passwordOK = bcrypt.compareSync(
