@@ -9,15 +9,15 @@ exports.create = (req, res) => {
   try {
     if (!PERFILESPERMITIDOS.includes(req.body.perfil)) {
       res.status(400).send("Perfil no válido");
-      return
-    } 
+      return;
+    }
     const validacion = chequearToken(
       req.headers["authorization"].split(" ")[1]
     );
-    if (Usuario.findOne({email: req.body.email})) {
+    if (Usuario.findOne({ email: req.body.email })) {
       res.status(400).send("Email ya en uso");
-      return
-    };
+      return;
+    }
     if (validacion.perfil === "Admin") {
       const usuario = new Usuario({
         nombre: req.body.nombre,
@@ -28,18 +28,18 @@ exports.create = (req, res) => {
       });
       usuario
         .save()
-        .then(data => res.send(data))
-        .catch(error => console.log(error));
+        .then((data) => res.send(data))
+        .catch((error) => console.log(error));
     } else if (validacion.perfil === "Basico") {
       res.status(403).send("No está autorizado para esta operación");
-      return
+      return;
     } else {
       res.status(401).send("Token inválido");
-      return
+      return;
     }
   } catch {
     res.status(400).send("Error");
-    return
+    return;
   }
 };
 
@@ -50,15 +50,15 @@ exports.login = (req, res) => {
       password: req.body.password,
     };
     console.log(usuarioLoguear);
-    Usuario.findOne({email: usuarioLoguear.email})
-      .then(data => {
+    Usuario.findOne({ email: usuarioLoguear.email })
+      .then((data) => {
         if (data === null) {
           res
-          .status(400)
-          .send(
-            "Hubo un problema al loguear, revise los datos y vuelva a intentar en un momento"
-          );
-          return
+            .status(400)
+            .send(
+              "Hubo un problema al loguear, revise los datos y vuelva a intentar en un momento"
+            );
+          return;
         }
         console.log(data);
 
@@ -74,13 +74,15 @@ exports.login = (req, res) => {
               id_usuario: data._id,
             },
             config.SECRETO,
-            {expiresIn: 86400}
+            { expiresIn: 86400 }
           );
-          res.cookie('token', token, {
-            expires: new Date(Date.now() + 86400),
-            secure: false, // set to true if your using https
-            httpOnly: true
-          }).send(token);
+          res
+            .cookie("token", token, {
+              expires: new Date(Date.now() + 86400),
+              secure: false, // set to true if your using https
+              httpOnly: true,
+            })
+            .send(token);
         } else {
           res
             .status(400)
@@ -89,7 +91,7 @@ exports.login = (req, res) => {
             );
         }
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   } catch {
     res
       .status(400)
@@ -106,8 +108,11 @@ exports.findAll = (req, res) => {
     );
     if (validacion.perfil === "Admin") {
       Usuario.find()
-        .then(data => res.send(data))
-        .catch(error => console.log(error));
+        .then((data) => {
+          data = data.map({ password, ...(data) => data });
+          res.send(data);
+        })
+        .catch((error) => console.log(error));
     } else if (validacion.perfil === "Basico") {
       res.status(403).send("No está autorizado para esta operación");
     } else {
@@ -124,9 +129,9 @@ exports.findOne = (req, res) => {
       req.headers["authorization"].split(" ")[1]
     );
     if (validacion.perfil === "Admin") {
-      Usuario.findOne({email: req.body.email})
-        .then(data => res.send(data))
-        .catch(error => console.log(error));
+      Usuario.findOne({ email: req.body.email })
+        .then((data) => res.send(data))
+        .catch((error) => console.log(error));
     } else if (validacion.perfil === "Basico") {
       res.status(403).send("No está autorizado para esta operación");
     } else {
@@ -144,7 +149,7 @@ exports.update = (req, res) => {
     );
     if (validacion.perfil === "Admin") {
       Usuario.updateOne(
-        {id: req.body.id},
+        { id: req.body.id },
         {
           $set: {
             nombre: req.body.nombre,
@@ -155,8 +160,8 @@ exports.update = (req, res) => {
           },
         }
       )
-        .then(data => res.send(data))
-        .catch(error => console.log(error));
+        .then((data) => res.send(data))
+        .catch((error) => console.log(error));
     } else if (validacion.perfil === "Basico") {
       res.status(403).send("No está autorizado para esta operación");
     } else {
@@ -173,9 +178,9 @@ exports.delete = (req, res) => {
       req.headers["authorization"].split(" ")[1]
     );
     if (validacion.perfil === "Admin") {
-      Usuario.deleteOne({_id: req.params.id})
-        .then(data => res.send(data))
-        .catch(error => console.log(error));
+      Usuario.deleteOne({ _id: req.params.id })
+        .then((data) => res.send(data))
+        .catch((error) => console.log(error));
     } else if (validacion.perfil === "Basico") {
       res.status(403).send("No está autorizado para esta operación");
     } else {
