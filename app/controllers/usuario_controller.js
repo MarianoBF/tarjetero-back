@@ -107,9 +107,8 @@ exports.findAll = (req, res) => {
       req.headers["authorization"].split(" ")[1]
     );
     if (validacion.perfil === "Admin") {
-      Usuario.find()
+      Usuario.find().select('_id nombre apellido email perfil')
         .then((data) => {
-          data = data.map({ password, ...(data) => data });
           res.send(data);
         })
         .catch((error) => console.log(error));
